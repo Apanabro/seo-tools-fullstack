@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import './Footer.css';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const toolLinks = [
+    { path: '/keyword-research', label: 'Keyword Research' },
     { path: '/rank-tracker', label: 'Rank Tracker' },
     { path: '/seo-audit', label: 'SEO Audit' },
+    { path: '/page-speed', label: 'Page Speed' },
+    { path: '/backlink-checker', label: 'Backlink Checker' },
+    { path: '/content-analyzer', label: 'Content Analyzer' },
     { path: '/link-checker', label: 'Link Checker' },
     { path: '/meta-generator', label: 'Meta Tags' },
     { path: '/robots-generator', label: 'Robots.txt' },
@@ -16,11 +19,6 @@ const Footer = () => {
 
   return (
     <footer className="footer">
-      <div className="footer-wave">
-        <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-          <path d="M0 50L60 45C120 40 240 30 360 35C480 40 600 60 720 65C840 70 960 60 1080 50C1200 40 1320 30 1380 25L1440 20V100H0V50Z" fill="white"/>
-        </svg>
-      </div>
       <div className="footer-content">
         <div className="footer-container">
           <div className="footer-section footer-brand">
@@ -39,13 +37,29 @@ const Footer = () => {
               </svg>
               <span>SEO Tools</span>
             </div>
-            <p>Professional SEO tools powered by browser automation. Analyze, audit, and optimize your website for better search rankings.</p>
+            <p>10 professional SEO tools powered by client-side automation. Analyze, audit, and optimize your website for better search rankings. No signup required.</p>
+            <div className="footer-badges">
+              <span className="footer-badge">100% Free</span>
+              <span className="footer-badge">No Signup</span>
+              <span className="footer-badge">Privacy First</span>
+            </div>
           </div>
 
           <div className="footer-section">
             <h4>Tools</h4>
             <ul>
-              {toolLinks.map((link) => (
+              {toolLinks.slice(0, 6).map((link) => (
+                <li key={link.path}>
+                  <Link to={link.path}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="footer-section">
+            <h4>More Tools</h4>
+            <ul>
+              {toolLinks.slice(6).map((link) => (
                 <li key={link.path}>
                   <Link to={link.path}>{link.label}</Link>
                 </li>
@@ -62,25 +76,18 @@ const Footer = () => {
               <li><a href="https://www.sitemaps.org/" target="_blank" rel="noopener noreferrer">Sitemaps.org</a></li>
             </ul>
           </div>
-
-          <div className="footer-section">
-            <h4>Support</h4>
-            <ul>
-              <li><a href="mailto:support@seo-tools.com">Contact Us</a></li>
-              <li><a href="/privacy">Privacy Policy</a></li>
-              <li><a href="/terms">Terms of Service</a></li>
-            </ul>
-          </div>
         </div>
       </div>
 
       <div className="footer-bottom">
         <div className="footer-bottom-content">
           <p>&copy; {currentYear} SEO Tools. All rights reserved.</p>
-          <div className="footer-badges">
-            <span className="badge">100% Free</span>
-            <span className="badge">No Signup</span>
-            <span className="badge">Privacy First</span>
+          <div className="footer-links">
+            <a href="mailto:support@seo-tools.com">Contact</a>
+            <span className="footer-dot">·</span>
+            <a href="/privacy">Privacy</a>
+            <span className="footer-dot">·</span>
+            <a href="/terms">Terms</a>
           </div>
         </div>
       </div>

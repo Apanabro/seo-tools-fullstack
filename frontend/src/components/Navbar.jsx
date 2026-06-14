@@ -11,7 +11,9 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
   const userMenuRef = useRef(null);
+  const toolsRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -19,32 +21,39 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => { setMobileMenuOpen(false); }, [location]);
+  useEffect(() => { setMobileMenuOpen(false); setToolsOpen(false); }, [location]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
-        setUserMenuOpen(false);
-      }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) setUserMenuOpen(false);
+      if (toolsRef.current && !toolsRef.current.contains(e.target)) setToolsOpen(false);
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    logout();
-    setUserMenuOpen(false);
-    navigate('/');
-  };
+  const handleLogout = () => { logout(); setUserMenuOpen(false); navigate('/'); };
 
-  const navItems = [
-    { path: '/', label: 'Dashboard' },
-    { path: '/rank-tracker', label: 'Rank Tracker' },
-    { path: '/seo-audit', label: 'SEO Audit' },
+  const mainTools = [
+    { path: '/keyword-research', label: 'Keyword Research', icon: '🔍' },
+    { path: '/rank-tracker', label: 'Rank Tracker', icon: '📈' },
+    { path: '/seo-audit', label: 'SEO Audit', icon: '📋' },
+    { path: '/page-speed', label: 'Page Speed', icon: '⚡' },
+    { path: '/backlink-checker', label: 'Backlink Checker', icon: '🔗' },
+    { path: '/content-analyzer', label: 'Content Analyzer', icon: '📝' },
+  ];
+
+  const moreTools = [
     { path: '/link-checker', label: 'Link Checker' },
     { path: '/meta-generator', label: 'Meta Tags' },
     { path: '/robots-generator', label: 'Robots.txt' },
     { path: '/sitemap-generator', label: 'Sitemap' },
+  ];
+
+  const navItems = [
+    { path: '/', label: 'Home' },
+    ...mainTools,
+    { path: '/more-tools', label: 'More Tools', isDropdown: true },
   ];
 
   return (
@@ -65,14 +74,34 @@ const Navbar = () => {
 
         <ul className="nav-links desktop-only">
           {navItems.map((item) => (
-            <li key={item.path}>
-              <Link to={item.path} className={location.pathname === item.path ? 'active' : ''}>
-                {location.pathname === item.path && (
-                  <motion.div className="active-indicator" layoutId="activeTab" transition={{ type: 'spring', stiffness: 300, damping: 30 }} />
-                )}
-                <span className="nav-text">{item.label}</span>
-              </Link>
-            </li>
+            item.isDropdown ? (
+              <li key="more-tools" className="dropdown-container" ref={toolsRef}>
+                <button className={`nav-dropdown-btn ${toolsOpen ? 'active' : ''}`} onClick={() => setToolsOpen(!toolsOpen)}>
+                  <span className="nav-text">More Tools</span>
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" className={`dropdown-arrow ${toolsOpen ? 'open' : ''}`}><path d="M7 10l5 5 5-5z"/></svg>
+                </button>
+                <AnimatePresence>
+                  {toolsOpen && (
+                    <motion.div className="dropdown-menu" initial={{ opacity: 0, y: -8, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: 0.95 }} transition={{ duration: 0.15 }}>
+                      {moreTools.map(tool => (
+                        <Link key={tool.path} to={tool.path} className={`dropdown-item ${location.pathname === tool.path ? 'active' : ''}`}>
+                          {tool.label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </li>
+            ) : (
+              <li key={item.path}>
+                <Link to={item.path} className={location.pathname === item.path ? 'active' : ''}>
+                  {location.pathname === item.path && (
+                    <motion.div className="active-indicator" layoutId="activeTab" transition={{ type: 'spring', stiffness: 300, damping: 30 }} />
+                  )}
+                  <span className="nav-text">{item.label}</span>
+                </Link>
+              </li>
+            )
           ))}
         </ul>
 
@@ -119,8 +148,15 @@ const Navbar = () => {
         {mobileMenuOpen && (
           <motion.div className="mobile-menu" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}>
             <ul className="mobile-nav-links">
-              {navItems.map((item, index) => (
-                <motion.li key={item.path} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.05 }}>
+              <li><Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link></li>
+              {mainTools.map((item, index) => (
+                <motion.li key={item.path} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.03 }}>
+                  <Link to={item.path} className={location.pathname === item.path ? 'active' : ''}>{item.icon} {item.label}</Link>
+                </motion.li>
+              ))}
+              <li className="mobile-divider">More Tools</li>
+              {moreTools.map((item, index) => (
+                <motion.li key={item.path} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: (mainTools.length + index) * 0.03 }}>
                   <Link to={item.path} className={location.pathname === item.path ? 'active' : ''}>{item.label}</Link>
                 </motion.li>
               ))}
