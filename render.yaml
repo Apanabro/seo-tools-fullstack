@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: seo-tools-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+    healthCheckPath: /health
+    plan: free
