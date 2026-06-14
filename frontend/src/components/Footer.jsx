@@ -4,7 +4,7 @@ import './Footer.css';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const toolLinks = [
+  const seoTools = [
     { path: '/keyword-research', label: 'Keyword Research' },
     { path: '/rank-tracker', label: 'Rank Tracker' },
     { path: '/seo-audit', label: 'SEO Audit' },
@@ -12,6 +12,12 @@ const Footer = () => {
     { path: '/backlink-checker', label: 'Backlink Checker' },
     { path: '/content-analyzer', label: 'Content Analyzer' },
     { path: '/link-checker', label: 'Link Checker' },
+    { path: '/keyword-density', label: 'Keyword Density' },
+    { path: '/sitemap-viewer', label: 'Sitemap Viewer' },
+    { path: '/robots-txt-viewer', label: 'Robots.txt Viewer' },
+  ];
+
+  const techTools = [
     { path: '/meta-generator', label: 'Meta Tags' },
     { path: '/robots-generator', label: 'Robots.txt' },
     { path: '/sitemap-generator', label: 'Sitemap' },
@@ -20,13 +26,23 @@ const Footer = () => {
     { path: '/ip-lookup', label: 'IP Lookup' },
     { path: '/header-checker', label: 'Header Checker' },
     { path: '/mobile-test', label: 'Mobile Test' },
-    { path: '/keyword-density', label: 'Keyword Density' },
+  ];
+
+  const utilTools = [
     { path: '/password-generator', label: 'Password Generator' },
     { path: '/qr-generator', label: 'QR Code Generator' },
     { path: '/json-formatter', label: 'JSON Formatter' },
     { path: '/encoder-decoder', label: 'Encoder / Decoder' },
     { path: '/hash-generator', label: 'Hash Generator' },
     { path: '/lorem-generator', label: 'Lorem Ipsum' },
+    { path: '/color-picker', label: 'Color Picker' },
+  ];
+
+  const devTools = [
+    { path: '/regex-tester', label: 'Regex Tester' },
+    { path: '/text-diff', label: 'Text Diff' },
+    { path: '/markdown-preview', label: 'Markdown Preview' },
+    { path: '/cron-generator', label: 'Cron Generator' },
   ];
 
   return (
@@ -49,7 +65,7 @@ const Footer = () => {
               </svg>
               <span>SEO Tools</span>
             </div>
-            <p>10 professional SEO tools powered by client-side automation. Analyze, audit, and optimize your website for better search rankings. No signup required.</p>
+            <p>31 professional SEO and developer tools. Analyze, audit, and optimize your website for better search rankings. No signup required.</p>
             <div className="footer-badges">
               <span className="footer-badge">100% Free</span>
               <span className="footer-badge">No Signup</span>
@@ -60,7 +76,7 @@ const Footer = () => {
           <div className="footer-section">
             <h4>SEO Tools</h4>
             <ul>
-              {toolLinks.slice(0, 8).map((link) => (
+              {seoTools.map((link) => (
                 <li key={link.path}>
                   <Link to={link.path}>{link.label}</Link>
                 </li>
@@ -71,7 +87,7 @@ const Footer = () => {
           <div className="footer-section">
             <h4>Technical Tools</h4>
             <ul>
-              {toolLinks.slice(8, 16).map((link) => (
+              {techTools.map((link) => (
                 <li key={link.path}>
                   <Link to={link.path}>{link.label}</Link>
                 </li>
@@ -80,9 +96,9 @@ const Footer = () => {
           </div>
 
           <div className="footer-section">
-            <h4>Utility Tools</h4>
+            <h4>Utilities</h4>
             <ul>
-              {toolLinks.slice(16).map((link) => (
+              {utilTools.map((link) => (
                 <li key={link.path}>
                   <Link to={link.path}>{link.label}</Link>
                 </li>
@@ -91,12 +107,13 @@ const Footer = () => {
           </div>
 
           <div className="footer-section">
-            <h4>Resources</h4>
+            <h4>Developer Tools</h4>
             <ul>
-              <li><a href="https://search.google.com/search-console" target="_blank" rel="noopener noreferrer">Google Search Console</a></li>
-              <li><a href="https://pagespeed.web.dev/" target="_blank" rel="noopener noreferrer">PageSpeed Insights</a></li>
-              <li><a href="https://schema.org/" target="_blank" rel="noopener noreferrer">Schema.org</a></li>
-              <li><a href="https://www.sitemaps.org/" target="_blank" rel="noopener noreferrer">Sitemaps.org</a></li>
+              {devTools.map((link) => (
+                <li key={link.path}>
+                  <Link to={link.path}>{link.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

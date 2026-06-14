@@ -1,6 +1,5 @@
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Dashboard from './pages/Dashboard';
@@ -26,6 +25,13 @@ import JSONFormatter from './pages/JSONFormatter';
 import EncodeTools from './pages/EncodeTools';
 import HashGenerator from './pages/HashGenerator';
 import LoremGenerator from './pages/LoremGenerator';
+import SitemapViewer from './pages/SitemapViewer';
+import RobotsTxtViewer from './pages/RobotsTxtViewer';
+import RegexTester from './pages/RegexTester';
+import ColorPicker from './pages/ColorPicker';
+import TextDiff from './pages/TextDiff';
+import MarkdownPreview from './pages/MarkdownPreview';
+import CronGenerator from './pages/CronGenerator';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 
@@ -57,6 +63,13 @@ function AnimatedRoutes() {
         <Route path="/encoder-decoder" element={<EncodeTools />} />
         <Route path="/hash-generator" element={<HashGenerator />} />
         <Route path="/lorem-generator" element={<LoremGenerator />} />
+        <Route path="/sitemap-viewer" element={<SitemapViewer />} />
+        <Route path="/robots-txt-viewer" element={<RobotsTxtViewer />} />
+        <Route path="/regex-tester" element={<RegexTester />} />
+        <Route path="/color-picker" element={<ColorPicker />} />
+        <Route path="/text-diff" element={<TextDiff />} />
+        <Route path="/markdown-preview" element={<MarkdownPreview />} />
+        <Route path="/cron-generator" element={<CronGenerator />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
@@ -66,17 +79,13 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <div className="app">
-          <Navbar />
-          <main className="main-content">
-            <AnimatedRoutes />
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </AuthProvider>
+    <div className="app">
+      <Navbar />
+      <main className="main-content">
+        <AnimatedRoutes />
+      </main>
+      <Footer />
+    </div>
   );
 }
 

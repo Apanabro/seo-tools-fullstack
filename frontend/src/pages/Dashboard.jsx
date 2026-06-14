@@ -324,6 +324,109 @@ const tools = [
     path: '/lorem-generator',
     features: ['Words, sentences', 'Paragraphs', 'Custom count', 'Copy to clipboard'],
     color: '#34a853'
+  },
+  {
+    id: 23,
+    title: 'Sitemap Viewer',
+    description: 'Parse and analyze XML sitemaps — view URLs, priorities, and structure.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="smvGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#4285f4" /><stop offset="100%" stopColor="#34a853" /></linearGradient></defs>
+        <path fill="url(#smvGrad)" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+      </svg>
+    ),
+    path: '/sitemap-viewer',
+    features: ['Parse XML sitemaps', 'URL filtering & sort', 'CSV export', 'Priority analysis'],
+    color: '#4285f4'
+  },
+  {
+    id: 24,
+    title: 'Robots.txt Viewer',
+    description: 'View, parse, and analyze robots.txt files for any website.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="rtvGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#ea4335" /><stop offset="100%" stopColor="#fbbc04" /></linearGradient></defs>
+        <path fill="url(#rtvGrad)" d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm4 10H8v-1c0-1.33 2.67-2 4-2s4 .67 4 2v1z"/>
+      </svg>
+    ),
+    path: '/robots-txt-viewer',
+    features: ['Allow/Disallow rules', 'Sitemap detection', 'Crawl-delay analysis', 'Raw text view'],
+    color: '#ea4335'
+  },
+  {
+    id: 25,
+    title: 'Regex Tester',
+    description: 'Test regular expressions with real-time matching and highlights.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="regexGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#7B1FA2" /><stop offset="100%" stopColor="#4285f4" /></linearGradient></defs>
+        <path fill="url(#regexGrad)" d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+      </svg>
+    ),
+    path: '/regex-tester',
+    features: ['Real-time matching', 'Highlight matches', '10 common presets', 'Capture groups'],
+    color: '#7B1FA2',
+    badge: 'Dev'
+  },
+  {
+    id: 26,
+    title: 'Color Picker',
+    description: 'Pick colors, convert formats, generate palettes and harmonies.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="cpGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#ff6b35" /><stop offset="100%" stopColor="#34a853" /></linearGradient></defs>
+        <path fill="url(#cpGrad)" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-1-.01-.83.67-1.5 1.49-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+      </svg>
+    ),
+    path: '/color-picker',
+    features: ['HEX/RGB/HSL', '24 presets', 'Color harmonies', 'Alpha channel'],
+    color: '#ff6b35',
+    badge: 'Design'
+  },
+  {
+    id: 27,
+    title: 'Text Diff',
+    description: 'Compare two texts side by side — find additions and deletions.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="diffGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#34a853" /><stop offset="100%" stopColor="#ea4335" /></linearGradient></defs>
+        <path fill="url(#diffGrad)" d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/>
+      </svg>
+    ),
+    path: '/text-diff',
+    features: ['Side-by-side view', 'Line numbers', 'Ignore case/whitespace', 'Unified diff copy'],
+    color: '#34a853',
+    badge: 'Dev'
+  },
+  {
+    id: 28,
+    title: 'Markdown Preview',
+    description: 'Write Markdown with live preview — headings, code, tables, and more.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="mdGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#4285f4" /><stop offset="100%" stopColor="#7B1FA2" /></linearGradient></defs>
+        <path fill="url(#mdGrad)" d="M20.56 18H3.44C2.65 18 2 17.37 2 16.59V7.41C2 6.63 2.65 6 3.44 6h17.12c.79 0 1.44.63 1.44 1.41v9.18c0 .78-.65 1.41-1.44 1.41M6.81 15.19V11.53l1.92 2.35 1.92-2.35v3.66h1.93V8.81h-1.93l-1.92 2.35-1.92-2.35H4.89v6.38h1.92M19.69 12h-1.92V8.81h-1.92V12h-1.93l2.89 3.28L19.69 12z"/>
+      </svg>
+    ),
+    path: '/markdown-preview',
+    features: ['Split/edit/preview', 'Live rendering', 'Word/char count', 'Syntax support'],
+    color: '#4285f4',
+    badge: 'Dev'
+  },
+  {
+    id: 29,
+    title: 'Cron Generator',
+    description: 'Generate and validate cron expressions with human-readable output.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="cronGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#fbbc04" /><stop offset="100%" stopColor="#ea4335" /></linearGradient></defs>
+        <path fill="url(#cronGrad)" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+      </svg>
+    ),
+    path: '/cron-generator',
+    features: ['12 quick presets', 'Human-readable', 'Next 5 run times', 'Copy cron string'],
+    color: '#fbbc04',
+    badge: 'Dev'
   }
 ];
 
@@ -355,13 +458,13 @@ const Dashboard = () => {
         <div className="hero-content">
           <motion.div className="hero-badge" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, type: 'spring' }}>
             <span className="badge-dot"></span>
-            24 Professional Tools - 100% Free
+            31 Professional Tools - 100% Free
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }}>
             The Complete SEO<br />Toolkit You Need
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6 }}>
-            Analyze, audit, track, and optimize your website with 24 powerful tools. 
+            Analyze, audit, track, and optimize your website with 31 powerful tools. 
             No signup, no limits, no BS.
           </motion.p>
           <motion.div className="hero-actions" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.6 }}>
@@ -372,7 +475,7 @@ const Dashboard = () => {
             <a href="#tools" className="btn-secondary">Explore All Tools</a>
           </motion.div>
           <motion.div className="hero-stats" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.6 }}>
-            <div className="stat-item"><span className="stat-number">24</span><span className="stat-label">Tools</span></div>
+            <div className="stat-item"><span className="stat-number">31</span><span className="stat-label">Tools</span></div>
             <div className="stat-divider"></div>
             <div className="stat-item"><span className="stat-number">100%</span><span className="stat-label">Free</span></div>
             <div className="stat-divider"></div>
@@ -386,7 +489,7 @@ const Dashboard = () => {
       {/* Tools Grid */}
       <section className="tools-section" id="tools">
         <motion.div className="section-header" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <h2>24 Powerful Tools</h2>
+          <h2>31 Powerful Tools</h2>
           <p>Everything you need to analyze, audit, and optimize your website</p>
         </motion.div>
 

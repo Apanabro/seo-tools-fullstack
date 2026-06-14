@@ -410,6 +410,35 @@
   cursor: pointer;
 }
 
+/* Theme Toggle */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--gray-100);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--gray-600);
+}
+
+.theme-toggle:hover {
+  background: var(--gray-200);
+  color: var(--gray-900);
+}
+
+.mobile-theme-toggle {
+  width: auto;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  gap: 8px;
+}
+
 /* Responsive */
 @media (max-width: 1100px) {
   .desktop-only {
