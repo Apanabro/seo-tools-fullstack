@@ -156,6 +156,174 @@ const tools = [
     path: '/sitemap-generator',
     features: ['XML format', 'Custom priorities', 'Change frequency'],
     color: '#00bcd4'
+  },
+  {
+    id: 11,
+    title: 'Schema Markup Generator',
+    description: 'Generate JSON-LD structured data for articles, products, FAQs, and more.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="schemaGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#00bcd4" /><stop offset="100%" stopColor="#4285f4" /></linearGradient></defs>
+        <path fill="url(#schemaGrad)" d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+      </svg>
+    ),
+    path: '/schema-generator',
+    features: ['12 schema types', 'JSON-LD output', 'Copy & download', 'HTML tag ready'],
+    color: '#00bcd4'
+  },
+  {
+    id: 12,
+    title: 'Redirect Checker',
+    description: 'Trace HTTP redirects, detect chains, loops, and response times.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="redirGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#ff9800" /><stop offset="100%" stopColor="#ff5722" /></linearGradient></defs>
+        <path fill="url(#redirGrad)" d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/>
+      </svg>
+    ),
+    path: '/redirect-checker',
+    features: ['301/302 detection', 'Chain tracing', 'Response time', 'Server info'],
+    color: '#ff9800'
+  },
+  {
+    id: 13,
+    title: 'IP & Server Lookup',
+    description: 'Find IP addresses, hosting provider, CDN, and WAF detection.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="ipGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#5ac8fa" /><stop offset="100%" stopColor="#5856d6" /></linearGradient></defs>
+        <path fill="url(#ipGrad)" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+      </svg>
+    ),
+    path: '/ip-lookup',
+    features: ['IP detection', 'Server info', 'CDN/WAF detect', 'SSL status'],
+    color: '#5ac8fa'
+  },
+  {
+    id: 14,
+    title: 'HTTP Header Checker',
+    description: 'Inspect response headers, security headers, and SEO headers.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#34a853" /><stop offset="100%" stopColor="#4285f4" /></linearGradient></defs>
+        <path fill="url(#headerGrad)" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+      </svg>
+    ),
+    path: '/header-checker',
+    features: ['Security assessment', 'HSTS/CSP check', 'All headers', 'Response time'],
+    color: '#34a853'
+  },
+  {
+    id: 15,
+    title: 'Mobile Friendliness',
+    description: 'Test if your website is optimized for mobile devices.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="mobileGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#4285f4" /><stop offset="100%" stopColor="#34a853" /></linearGradient></defs>
+        <path fill="url(#mobileGrad)" d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+      </svg>
+    ),
+    path: '/mobile-test',
+    features: ['Viewport check', 'Responsive CSS', 'Touch icons', 'Score system'],
+    color: '#4285f4'
+  },
+  {
+    id: 16,
+    title: 'Keyword Density',
+    description: 'Analyze keyword frequency, density, and content readability.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="densityGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#ff375f" /><stop offset="100%" stopColor="#ff9800" /></linearGradient></defs>
+        <path fill="url(#densityGrad)" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+      </svg>
+    ),
+    path: '/keyword-density',
+    features: ['Density %', 'Top keywords', 'Readability', 'Export CSV'],
+    color: '#ff375f'
+  },
+  {
+    id: 17,
+    title: 'Password Generator',
+    description: 'Generate secure passwords with strength analysis.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="passGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#34a853" /><stop offset="100%" stopColor="#4285f4" /></linearGradient></defs>
+        <path fill="url(#passGrad)" d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+      </svg>
+    ),
+    path: '/password-generator',
+    features: ['Crypto secure', 'Custom length', 'Strength meter', 'History'],
+    color: '#34a853'
+  },
+  {
+    id: 18,
+    title: 'QR Code Generator',
+    description: 'Generate QR codes for URLs, text, and data.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="qrGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#1d1d1f" /><stop offset="100%" stopColor="#636366" /></linearGradient></defs>
+        <path fill="url(#qrGrad)" d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v2zM19 19h2v2h-2zM13 13h2v2h-2zM15 15h2v2h-2zM13 17h2v2h-2zM15 19h2v2h-2zM17 17h2v2h-2zM17 13h2v2h-2zM19 15h2v2h-2z"/>
+      </svg>
+    ),
+    path: '/qr-generator',
+    features: ['Custom size', 'Download PNG', 'Any text/URL', 'Instant generation'],
+    color: '#636366'
+  },
+  {
+    id: 19,
+    title: 'JSON Formatter',
+    description: 'Format, validate, minify, and explore JSON data.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="jsonGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#fbbc04" /><stop offset="100%" stopColor="#ea4335" /></linearGradient></defs>
+        <path fill="url(#jsonGrad)" d="M5 3h2v2H5v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5h2v2H5c-1.1 0-2-.9-2-2v-4a2 2 0 0 0-2-2H0v-2h1a2 2 0 0 0 2-2V5c0-1.1.9-2 2-2m14 0c1.1 0 2 .9 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4c0 1.1-.9 2-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3h2z"/>
+      </svg>
+    ),
+    path: '/json-formatter',
+    features: ['Format/Minify', 'Tree view', 'Syntax colors', 'File upload'],
+    color: '#fbbc04'
+  },
+  {
+    id: 20,
+    title: 'Encoder / Decoder',
+    description: 'Encode and decode Base64, URL, HTML, Hex, and Binary.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="encGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#5856d6" /><stop offset="100%" stopColor="#bf5af2" /></linearGradient></defs>
+        <path fill="url(#encGrad)" d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+      </svg>
+    ),
+    path: '/encoder-decoder',
+    features: ['Base64, URL, HTML', 'Hex, Binary', 'Swap input/output', '10 modes'],
+    color: '#5856d6'
+  },
+  {
+    id: 21,
+    title: 'Hash Generator',
+    description: 'Generate MD5, SHA-1, SHA-256, and SHA-224 hashes.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="hashGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#ea4335" /><stop offset="100%" stopColor="#4285f4" /></linearGradient></defs>
+        <path fill="url(#hashGrad)" d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+      </svg>
+    ),
+    path: '/hash-generator',
+    features: ['MD5, SHA-1, SHA-256', 'SHA-224', 'One-click copy', 'Instant results'],
+    color: '#ea4335'
+  },
+  {
+    id: 22,
+    title: 'Lorem Ipsum Generator',
+    description: 'Generate placeholder text for designs and prototypes.',
+    icon: (
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <defs><linearGradient id="loremGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#34a853" /><stop offset="100%" stopColor="#fbbc04" /></linearGradient></defs>
+        <path fill="url(#loremGrad)" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+      </svg>
+    ),
+    path: '/lorem-generator',
+    features: ['Words, sentences', 'Paragraphs', 'Custom count', 'Copy to clipboard'],
+    color: '#34a853'
   }
 ];
 
@@ -187,13 +355,13 @@ const Dashboard = () => {
         <div className="hero-content">
           <motion.div className="hero-badge" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, type: 'spring' }}>
             <span className="badge-dot"></span>
-            10 Professional Tools - 100% Free
+            24 Professional Tools - 100% Free
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }}>
             The Complete SEO<br />Toolkit You Need
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6 }}>
-            Analyze, audit, track, and optimize your website with 10 powerful tools. 
+            Analyze, audit, track, and optimize your website with 24 powerful tools. 
             No signup, no limits, no BS.
           </motion.p>
           <motion.div className="hero-actions" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.6 }}>
@@ -204,7 +372,7 @@ const Dashboard = () => {
             <a href="#tools" className="btn-secondary">Explore All Tools</a>
           </motion.div>
           <motion.div className="hero-stats" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.6 }}>
-            <div className="stat-item"><span className="stat-number">10</span><span className="stat-label">Tools</span></div>
+            <div className="stat-item"><span className="stat-number">24</span><span className="stat-label">Tools</span></div>
             <div className="stat-divider"></div>
             <div className="stat-item"><span className="stat-number">100%</span><span className="stat-label">Free</span></div>
             <div className="stat-divider"></div>
@@ -218,7 +386,7 @@ const Dashboard = () => {
       {/* Tools Grid */}
       <section className="tools-section" id="tools">
         <motion.div className="section-header" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <h2>10 Powerful SEO Tools</h2>
+          <h2>24 Powerful Tools</h2>
           <p>Everything you need to analyze, audit, and optimize your website</p>
         </motion.div>
 

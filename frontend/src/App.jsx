@@ -14,12 +14,23 @@ import KeywordResearch from './pages/KeywordResearch';
 import PageSpeed from './pages/PageSpeed';
 import BacklinkChecker from './pages/BacklinkChecker';
 import ContentAnalyzer from './pages/ContentAnalyzer';
+import SchemaGenerator from './pages/SchemaGenerator';
+import RedirectChecker from './pages/RedirectChecker';
+import IPLookup from './pages/IPLookup';
+import HeaderChecker from './pages/HeaderChecker';
+import MobileTest from './pages/MobileTest';
+import KeywordDensity from './pages/KeywordDensity';
+import PasswordGenerator from './pages/PasswordGenerator';
+import QRGenerator from './pages/QRGenerator';
+import JSONFormatter from './pages/JSONFormatter';
+import EncodeTools from './pages/EncodeTools';
+import HashGenerator from './pages/HashGenerator';
+import LoremGenerator from './pages/LoremGenerator';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 
 function AnimatedRoutes() {
   const location = useLocation();
-
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
@@ -34,6 +45,18 @@ function AnimatedRoutes() {
         <Route path="/meta-generator" element={<MetaGenerator />} />
         <Route path="/robots-generator" element={<RobotsGenerator />} />
         <Route path="/sitemap-generator" element={<SitemapGenerator />} />
+        <Route path="/schema-generator" element={<SchemaGenerator />} />
+        <Route path="/redirect-checker" element={<RedirectChecker />} />
+        <Route path="/ip-lookup" element={<IPLookup />} />
+        <Route path="/header-checker" element={<HeaderChecker />} />
+        <Route path="/mobile-test" element={<MobileTest />} />
+        <Route path="/keyword-density" element={<KeywordDensity />} />
+        <Route path="/password-generator" element={<PasswordGenerator />} />
+        <Route path="/qr-generator" element={<QRGenerator />} />
+        <Route path="/json-formatter" element={<JSONFormatter />} />
+        <Route path="/encoder-decoder" element={<EncodeTools />} />
+        <Route path="/hash-generator" element={<HashGenerator />} />
+        <Route path="/lorem-generator" element={<LoremGenerator />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>

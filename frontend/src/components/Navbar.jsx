@@ -44,10 +44,22 @@ const Navbar = () => {
   ];
 
   const moreTools = [
+    { path: '/schema-generator', label: 'Schema Markup' },
+    { path: '/redirect-checker', label: 'Redirect Checker' },
+    { path: '/ip-lookup', label: 'IP Lookup' },
+    { path: '/header-checker', label: 'Header Checker' },
+    { path: '/mobile-test', label: 'Mobile Test' },
+    { path: '/keyword-density', label: 'Keyword Density' },
     { path: '/link-checker', label: 'Link Checker' },
     { path: '/meta-generator', label: 'Meta Tags' },
     { path: '/robots-generator', label: 'Robots.txt' },
     { path: '/sitemap-generator', label: 'Sitemap' },
+    { path: '/password-generator', label: 'Password Gen' },
+    { path: '/qr-generator', label: 'QR Code Gen' },
+    { path: '/json-formatter', label: 'JSON Formatter' },
+    { path: '/encoder-decoder', label: 'Encoder/Decoder' },
+    { path: '/hash-generator', label: 'Hash Generator' },
+    { path: '/lorem-generator', label: 'Lorem Ipsum' },
   ];
 
   const navItems = [

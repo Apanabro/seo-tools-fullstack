@@ -15,6 +15,18 @@ const Footer = () => {
     { path: '/meta-generator', label: 'Meta Tags' },
     { path: '/robots-generator', label: 'Robots.txt' },
     { path: '/sitemap-generator', label: 'Sitemap' },
+    { path: '/schema-generator', label: 'Schema Markup' },
+    { path: '/redirect-checker', label: 'Redirect Checker' },
+    { path: '/ip-lookup', label: 'IP Lookup' },
+    { path: '/header-checker', label: 'Header Checker' },
+    { path: '/mobile-test', label: 'Mobile Test' },
+    { path: '/keyword-density', label: 'Keyword Density' },
+    { path: '/password-generator', label: 'Password Generator' },
+    { path: '/qr-generator', label: 'QR Code Generator' },
+    { path: '/json-formatter', label: 'JSON Formatter' },
+    { path: '/encoder-decoder', label: 'Encoder / Decoder' },
+    { path: '/hash-generator', label: 'Hash Generator' },
+    { path: '/lorem-generator', label: 'Lorem Ipsum' },
   ];
 
   return (
@@ -46,9 +58,9 @@ const Footer = () => {
           </div>
 
           <div className="footer-section">
-            <h4>Tools</h4>
+            <h4>SEO Tools</h4>
             <ul>
-              {toolLinks.slice(0, 6).map((link) => (
+              {toolLinks.slice(0, 8).map((link) => (
                 <li key={link.path}>
                   <Link to={link.path}>{link.label}</Link>
                 </li>
@@ -57,9 +69,20 @@ const Footer = () => {
           </div>
 
           <div className="footer-section">
-            <h4>More Tools</h4>
+            <h4>Technical Tools</h4>
             <ul>
-              {toolLinks.slice(6).map((link) => (
+              {toolLinks.slice(8, 16).map((link) => (
+                <li key={link.path}>
+                  <Link to={link.path}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="footer-section">
+            <h4>Utility Tools</h4>
+            <ul>
+              {toolLinks.slice(16).map((link) => (
                 <li key={link.path}>
                   <Link to={link.path}>{link.label}</Link>
                 </li>
