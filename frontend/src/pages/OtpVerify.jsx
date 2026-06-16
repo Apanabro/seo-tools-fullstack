@@ -2,8 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import emailjs from '@emailjs/browser';
 
 const API_URL = 'https://seo-tools-api-production.up.railway.app';
+
+const EMAILJS_SERVICE_ID = 'service_za9cn5t';
+const EMAILJS_TEMPLATE_ID = 'template_mqvu6o7';
+const EMAILJS_PUBLIC_KEY = 'G6-rBJQmi1II39qLL';
 
 const OtpVerify = () => {
   const { pendingUser, completeLogin, logout } = useAuth();
@@ -18,7 +23,41 @@ const OtpVerify = () => {
 
   useEffect(() => {
     if (!pendingUser) { navigate('/login'); return; }
-    sendOtp();
+    const email = pendingUser?.email;
+    if (!email) { navigate('/login'); return; }
+    const doSendOtp = async () => {
+      setResending(true);
+      setError('');
+      try {
+        const res = await fetch(`${API_URL}/api/otp/generate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (data.success && data.otp) {
+          await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            {
+              email: email,
+              passcode: data.otp,
+              time: new Date(Date.now() + 5 * 60 * 1000).toLocaleTimeString()
+            }
+          );
+          setSuccess(`OTP sent to ${email}`);
+          setCountdown(60);
+        } else {
+          setError(data.error || 'Failed to generate OTP');
+        }
+      } catch (e) {
+        console.error('OTP send error:', e);
+        if (e.text) setError('Email send failed: ' + e.text);
+        else setError('Failed to send OTP: ' + (e.message || 'Unknown error'));
+      }
+      setResending(false);
+    };
+    doSendOtp();
   }, []);
 
   useEffect(() => {
@@ -30,21 +69,42 @@ const OtpVerify = () => {
   const sendOtp = async () => {
     setResending(true);
     setError('');
+    const email = pendingUser?.email;
+    if (!email) {
+      setError('No email found. Please go back and try again.');
+      setResending(false);
+      return;
+    }
     try {
       const res = await fetch(`${API_URL}/api/otp/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: pendingUser?.email })
+        body: JSON.stringify({ email })
       });
       const data = await res.json();
-      if (data.success) {
-        setSuccess(`OTP sent to ${pendingUser?.email} (Demo: ${data.otp})`);
+      if (data.success && data.otp) {
+        const response = await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          {
+            email: email,
+            passcode: data.otp,
+            time: new Date(Date.now() + 5 * 60 * 1000).toLocaleTimeString()
+          }
+        );
+        console.log('EmailJS response:', response);
+        setSuccess(`OTP sent to ${email}`);
         setCountdown(60);
       } else {
-        setError(data.error || 'Failed to send OTP');
+        setError(data.error || 'Failed to generate OTP');
       }
     } catch (e) {
-      setError('Network error. Please try again.');
+      console.error('OTP send error:', e);
+      if (e.text) {
+        setError('Email send failed: ' + e.text);
+      } else {
+        setError('Failed to send OTP: ' + (e.message || 'Unknown error'));
+      }
     }
     setResending(false);
   };

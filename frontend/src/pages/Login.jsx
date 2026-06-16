@@ -20,13 +20,18 @@ const Login = () => {
     window.location.href = url;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     if (!email || !password) { setError('Please fill in all fields'); setLoading(false); return; }
-    login({ id: Date.now().toString(), name: email.split('@')[0], email, picture: null });
-    navigate('/');
+    const result = await login(email, password);
+    if (result.success) {
+      navigate('/');
+    } else {
+      setError(result.error);
+    }
+    setLoading(false);
   };
 
   return (

@@ -1,5 +1,4 @@
-import { createHashRouter, RouterProvider, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { createHashRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Dashboard from './pages/Dashboard';
@@ -47,58 +46,11 @@ import Contact from './pages/Contact';
 import OtpVerify from './pages/OtpVerify';
 
 function AppLayout() {
-  const location = useLocation();
   return (
     <div className="app">
       <Navbar />
       <main className="min-h-screen">
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/keyword-research" element={<KeywordResearch />} />
-            <Route path="/rank-tracker" element={<RankTracker />} />
-            <Route path="/seo-audit" element={<SeoAudit />} />
-            <Route path="/page-speed" element={<PageSpeed />} />
-            <Route path="/backlink-checker" element={<BacklinkChecker />} />
-            <Route path="/content-analyzer" element={<ContentAnalyzer />} />
-            <Route path="/link-checker" element={<LinkChecker />} />
-            <Route path="/meta-generator" element={<MetaGenerator />} />
-            <Route path="/robots-generator" element={<RobotsGenerator />} />
-            <Route path="/sitemap-generator" element={<SitemapGenerator />} />
-            <Route path="/schema-generator" element={<SchemaGenerator />} />
-            <Route path="/redirect-checker" element={<RedirectChecker />} />
-            <Route path="/ip-lookup" element={<IPLookup />} />
-            <Route path="/header-checker" element={<HeaderChecker />} />
-            <Route path="/mobile-test" element={<MobileTest />} />
-            <Route path="/keyword-density" element={<KeywordDensity />} />
-            <Route path="/password-generator" element={<PasswordGenerator />} />
-            <Route path="/qr-generator" element={<QRGenerator />} />
-            <Route path="/json-formatter" element={<JSONFormatter />} />
-            <Route path="/encoder-decoder" element={<EncodeTools />} />
-            <Route path="/hash-generator" element={<HashGenerator />} />
-            <Route path="/lorem-generator" element={<LoremGenerator />} />
-            <Route path="/sitemap-viewer" element={<SitemapViewer />} />
-            <Route path="/robots-txt-viewer" element={<RobotsTxtViewer />} />
-            <Route path="/regex-tester" element={<RegexTester />} />
-            <Route path="/color-picker" element={<ColorPicker />} />
-            <Route path="/text-diff" element={<TextDiff />} />
-            <Route path="/markdown-preview" element={<MarkdownPreview />} />
-            <Route path="/cron-generator" element={<CronGenerator />} />
-            <Route path="/uuid-generator" element={<UUIDGenerator />} />
-            <Route path="/timestamp-converter" element={<TimestampConverter />} />
-            <Route path="/gradient-generator" element={<GradientGenerator />} />
-            <Route path="/box-shadow-generator" element={<BoxShadowGenerator />} />
-            <Route path="/flexbox-playground" element={<FlexboxPlayground />} />
-            <Route path="/css-grid-generator" element={<CSSGridGenerator />} />
-            <Route path="/contrast-checker" element={<ContrastChecker />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/verify-otp" element={<OtpVerify />} />
-          </Routes>
-        </AnimatePresence>
+        <Outlet />
       </main>
       <Footer />
     </div>
@@ -106,7 +58,55 @@ function AppLayout() {
 }
 
 const router = createHashRouter([
-  { path: '*', element: <AppLayout /> }
+  {
+    path: '/',
+    element: <AppLayout />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: 'keyword-research', element: <KeywordResearch /> },
+      { path: 'rank-tracker', element: <RankTracker /> },
+      { path: 'seo-audit', element: <SeoAudit /> },
+      { path: 'page-speed', element: <PageSpeed /> },
+      { path: 'backlink-checker', element: <BacklinkChecker /> },
+      { path: 'content-analyzer', element: <ContentAnalyzer /> },
+      { path: 'link-checker', element: <LinkChecker /> },
+      { path: 'meta-generator', element: <MetaGenerator /> },
+      { path: 'robots-generator', element: <RobotsGenerator /> },
+      { path: 'sitemap-generator', element: <SitemapGenerator /> },
+      { path: 'schema-generator', element: <SchemaGenerator /> },
+      { path: 'redirect-checker', element: <RedirectChecker /> },
+      { path: 'ip-lookup', element: <IPLookup /> },
+      { path: 'header-checker', element: <HeaderChecker /> },
+      { path: 'mobile-test', element: <MobileTest /> },
+      { path: 'keyword-density', element: <KeywordDensity /> },
+      { path: 'password-generator', element: <PasswordGenerator /> },
+      { path: 'qr-generator', element: <QRGenerator /> },
+      { path: 'json-formatter', element: <JSONFormatter /> },
+      { path: 'encoder-decoder', element: <EncodeTools /> },
+      { path: 'hash-generator', element: <HashGenerator /> },
+      { path: 'lorem-generator', element: <LoremGenerator /> },
+      { path: 'sitemap-viewer', element: <SitemapViewer /> },
+      { path: 'robots-txt-viewer', element: <RobotsTxtViewer /> },
+      { path: 'regex-tester', element: <RegexTester /> },
+      { path: 'color-picker', element: <ColorPicker /> },
+      { path: 'text-diff', element: <TextDiff /> },
+      { path: 'markdown-preview', element: <MarkdownPreview /> },
+      { path: 'cron-generator', element: <CronGenerator /> },
+      { path: 'uuid-generator', element: <UUIDGenerator /> },
+      { path: 'timestamp-converter', element: <TimestampConverter /> },
+      { path: 'gradient-generator', element: <GradientGenerator /> },
+      { path: 'box-shadow-generator', element: <BoxShadowGenerator /> },
+      { path: 'flexbox-playground', element: <FlexboxPlayground /> },
+      { path: 'css-grid-generator', element: <CSSGridGenerator /> },
+      { path: 'contrast-checker', element: <ContrastChecker /> },
+      { path: 'login', element: <Login /> },
+      { path: 'signup', element: <Signup /> },
+      { path: 'privacy', element: <Privacy /> },
+      { path: 'terms', element: <Terms /> },
+      { path: 'contact', element: <Contact /> },
+      { path: 'verify-otp', element: <OtpVerify /> },
+    ]
+  }
 ]);
 
 function App() {

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 
 const Signup = () => {
-  const { login } = useAuth();
+  const { login, setPendingUser } = useAuth();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -26,8 +26,8 @@ const Signup = () => {
     setError('');
     if (!name || !email || !password) { setError('Please fill in all fields'); setLoading(false); return; }
     if (password.length < 6) { setError('Password must be at least 6 characters'); setLoading(false); return; }
-    login({ id: Date.now().toString(), name, email, picture: null });
-    navigate('/');
+    setPendingUser({ id: Date.now().toString(), name, email, password, picture: null });
+    navigate('/verify-otp');
   };
 
   return (

@@ -55,10 +55,9 @@ const Footer = () => {
               </div>
               <span className="text-white font-semibold text-lg">SEO Tools</span>
             </div>
-            <p className="text-sm text-gray-500 leading-relaxed mb-4">38 professional tools. Analyze, audit, and optimize your website. No signup required.</p>
+            <p className="text-sm text-gray-500 leading-relaxed mb-4">38 professional tools. Analyze, audit, and optimize your website.</p>
             <div className="flex gap-2 flex-wrap">
               <span className="px-3 py-1 bg-gray-800 rounded-full text-xs font-medium text-gray-300">100% Free</span>
-              <span className="px-3 py-1 bg-gray-800 rounded-full text-xs font-medium text-gray-300">No Signup</span>
             </div>
           </div>
           {cols.map(col => (
@@ -77,9 +76,9 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-500">&copy; {year} SEO Tools. All rights reserved.</p>
           <div className="flex items-center gap-4 text-sm text-gray-500">
-            <a href="mailto:support@seo-tools.com" className="hover:text-white no-underline transition-colors">Contact</a>
-            <a href="/privacy" className="hover:text-white no-underline transition-colors">Privacy</a>
-            <a href="/terms" className="hover:text-white no-underline transition-colors">Terms</a>
+            <Link to="/contact" className="hover:text-white no-underline transition-colors">Contact</Link>
+            <Link to="/privacy" className="hover:text-white no-underline transition-colors">Privacy</Link>
+            <Link to="/terms" className="hover:text-white no-underline transition-colors">Terms</Link>
           </div>
         </div>
       </div>

@@ -12,20 +12,25 @@ const Privacy = () => (
 
         <div className="prose prose-gray dark:prose-invert max-w-none">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-8 mb-4">1. Information We Collect</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">We do not collect personal data. Our tools run entirely in your browser — no data is sent to our servers.</p>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">When you create an account, we collect your name and email address. We also collect tool usage analytics (which tools you use, browser, OS, and approximate IP) to improve our services.</p>
 
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-8 mb-4">2. Local Storage</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">Some tools may save preferences (theme, history) in your browser's localStorage. This never leaves your device.</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-8 mb-4">2. How We Use Your Data</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">Your data is used solely to provide and improve the service. We do not sell, share, or rent your personal information to third parties.</p>
 
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-8 mb-4">3. Third-Party Services</h2>
           <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 mb-4 space-y-2">
-            <li>Google OAuth (optional login) — see <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">Google's Privacy Policy</a></li>
+            <li>Google OAuth (login) — see <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">Google's Privacy Policy</a></li>
+            <li>EmailJS (OTP emails) — see <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">EmailJS Privacy</a></li>
+            <li>MongoDB Atlas (data storage) — see <a href="https://www.mongodb.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">MongoDB's Privacy</a></li>
             <li>GitHub Pages (hosting) — see <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">GitHub's Privacy</a></li>
             <li>Railway (backend API) — see <a href="https://railway.app/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">Railway's Privacy</a></li>
           </ul>
 
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-8 mb-4">4. Analytics</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">No analytics, tracking cookies, or fingerprinting scripts are used.</p>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">We track which tools you use and basic usage patterns (timestamps, duration) to understand how our tools are being used. This data is stored securely and is only accessible to the site administrator.</p>
+
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-8 mb-4">5. Data Retention</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">Your account data is retained until you request deletion. Analytics data is capped at 500 entries per user.</p>
 
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-8 mb-4">5. Contact</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-4">Questions? Email <a href="mailto:privacy@seo-tools.com" className="text-blue-600 dark:text-blue-400 hover:underline">privacy@seo-tools.com</a></p>

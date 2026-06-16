@@ -1,26 +1,108 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
+const mongoose = require('mongoose');
+const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const ADMIN_SECRET = process.env.ADMIN_SECRET || 'seo-tools-admin-2025';
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER || 'jy306648@gmail.com',
-    pass: process.env.GMAIL_PASS || 'biwt xpcy lvwv kvtd'
-  }
-});
-
-app.use(cors({ origin: process.env.CORS_ORIGIN || '*', methods: ['GET', 'POST'], allowedHeaders: ['Content-Type'] }));
+app.use(cors({ origin: process.env.CORS_ORIGIN || '*', methods: ['GET', 'POST', 'DELETE', 'OPTIONS'], allowedHeaders: ['Content-Type', 'Authorization'] }));
 app.use(express.json());
 
+// MongoDB connection with retry
+let isConnected = false;
+async function connectDB(retries = 5) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+      isConnected = true;
+      console.log('[MongoDB] Connected');
+      return;
+    } catch (err) {
+      console.error(`[MongoDB] Connection attempt ${i + 1} failed:`, err.message);
+      if (i < retries - 1) await new Promise(r => setTimeout(r, 5000));
+    }
+  }
+  console.error('[MongoDB] All connection attempts failed. Running without DB.');
+}
+connectDB();
+
+// Simple rate limiter
+const rateBuckets = {};
+function rateLimit(limit = 30, windowMs = 60000) {
+  return (req, res, next) => {
+    const key = req.ip || req.connection.remoteAddress || 'unknown';
+    const now = Date.now();
+    if (!rateBuckets[key] || now - rateBuckets[key].start > windowMs) {
+      rateBuckets[key] = { start: now, count: 1 };
+      return next();
+    }
+    rateBuckets[key].count++;
+    if (rateBuckets[key].count > limit) {
+      return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+    }
+    next();
+  };
+}
+
+// Cleanup old rate limit buckets every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const key in rateBuckets) {
+    if (now - rateBuckets[key].start > 120000) delete rateBuckets[key];
+  }
+}, 300000);
+
+// Cleanup old OTP entries every 2 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const key in otpStore) {
+    if (now > otpStore[key].expires) delete otpStore[key];
+  }
+}, 120000);
+
+// Admin auth middleware
+function requireAdmin(req, res, next) {
+  const token = req.headers.authorization?.replace('Bearer ', '');
+  if (!token || token !== ADMIN_SECRET) {
+    return res.status(401).json({ error: 'Unauthorized. Admin access required.' });
+  }
+  next();
+}
+
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String },
+  picture: { type: String },
+  phone: { type: String, default: '' },
+  company: { type: String, default: '' },
+  signupMethod: { type: String, enum: ['email', 'google'], default: 'email' },
+  signupDate: { type: Date, default: Date.now },
+  lastLogin: { type: Date, default: Date.now },
+  loginCount: { type: Number, default: 1 },
+  ip: { type: String, default: '' },
+  browser: { type: String, default: '' },
+  os: { type: String, default: '' },
+  analytics: [{
+    tool: String,
+    action: String,
+    timestamp: { type: Date, default: Date.now },
+    duration: Number,
+    ip: String
+  }]
+}, { timestamps: true });
+
+const User = mongoose.model('User', userSchema);
+
+// --- Health ---
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString(), uptime: process.uptime(), service: 'seo-tools-api' });
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString(), uptime: process.uptime(), service: 'seo-tools-api', db: isConnected ? 'connected' : 'disconnected' });
 });
 
+// --- SEO endpoints (unchanged) ---
 app.post('/api/seo/rank', async (req, res) => {
   const { keyword, domain, maxPages = 3 } = req.body;
   if (!keyword || !domain) return res.status(400).json({ error: 'Keyword and domain are required' });
@@ -74,6 +156,167 @@ app.post('/api/seo/sitemap', (req, res) => {
   res.json({ success: true, data: sitemap });
 });
 
+// --- OTP ---
+const otpStore = {};
+
+function generateOTP() {
+  return crypto.randomInt(100000, 999999).toString();
+}
+
+app.post('/api/otp/generate', rateLimit(5, 60000), (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ error: 'Email is required' });
+  const otp = generateOTP();
+  otpStore[email] = { otp, expires: Date.now() + 5 * 60 * 1000, attempts: 0 };
+  res.json({ success: true, otp, message: 'OTP generated' });
+});
+
+app.post('/api/otp/verify', rateLimit(10, 60000), (req, res) => {
+  const { email, otp } = req.body;
+  if (!email || !otp) return res.status(400).json({ error: 'Email and OTP are required' });
+  const record = otpStore[email];
+  if (!record) return res.status(400).json({ error: 'No OTP found. Please request a new one.' });
+  if (Date.now() > record.expires) { delete otpStore[email]; return res.status(400).json({ error: 'OTP expired. Please request a new one.' }); }
+  if (record.attempts >= 5) { delete otpStore[email]; return res.status(400).json({ error: 'Too many attempts. Please request a new OTP.' }); }
+  record.attempts++;
+  if (record.otp !== otp) return res.status(400).json({ error: 'Invalid OTP. Please try again.' });
+  delete otpStore[email];
+  res.json({ success: true, message: 'OTP verified successfully' });
+});
+
+// --- Auth ---
+async function hashPassword(pw) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto.scryptSync(pw, salt, 64).toString('hex');
+  return salt + ':' + hash;
+}
+
+async function verifyPassword(pw, stored) {
+  if (!stored || !stored.includes(':')) return false;
+  const [salt, hash] = stored.split(':');
+  const verify = crypto.scryptSync(pw, salt, 64).toString('hex');
+  return hash === verify;
+}
+
+app.post('/api/auth/register', rateLimit(10, 60000), async (req, res) => {
+  try {
+    if (!isConnected) return res.status(503).json({ error: 'Database unavailable. Please try again later.' });
+    const { name, email, password, picture, signupMethod, ip, browser, os } = req.body;
+    if (!name || !email) return res.status(400).json({ error: 'Name and email are required' });
+    let user = await User.findOne({ email });
+    if (user) {
+      user.lastLogin = new Date();
+      user.loginCount += 1;
+      if (ip) user.ip = ip;
+      if (browser) user.browser = browser;
+      if (os) user.os = os;
+      await user.save();
+      return res.json({ success: true, user });
+    }
+    const hashedPassword = password ? await hashPassword(password) : undefined;
+    user = await User.create({ name, email, password: hashedPassword, picture, signupMethod, ip, browser, os });
+    res.json({ success: true, user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/auth/login', rateLimit(15, 60000), async (req, res) => {
+  try {
+    if (!isConnected) return res.status(503).json({ error: 'Database unavailable. Please try again later.' });
+    const { email, password, ip, browser, os } = req.body;
+    if (!email) return res.status(400).json({ error: 'Email is required' });
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ error: 'Account not found. Please sign up first.' });
+    if (user.password && password) {
+      const valid = await verifyPassword(password, user.password);
+      if (!valid) return res.status(400).json({ error: 'Invalid password' });
+    }
+    user.lastLogin = new Date();
+    user.loginCount += 1;
+    if (ip) user.ip = ip;
+    if (browser) user.browser = browser;
+    if (os) user.os = os;
+    await user.save();
+    res.json({ success: true, user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/auth/profile', rateLimit(20, 60000), async (req, res) => {
+  try {
+    if (!isConnected) return res.status(503).json({ error: 'Database unavailable' });
+    const { email, phone, company } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ error: 'User not found' });
+    if (phone !== undefined) user.phone = phone;
+    if (company !== undefined) user.company = company;
+    await user.save();
+    res.json({ success: true, user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Analytics ---
+app.post('/api/analytics/track', rateLimit(60, 60000), async (req, res) => {
+  try {
+    if (!isConnected) return res.json({ success: true });
+    const { email, tool, action, duration } = req.body;
+    if (!email || !tool) return res.status(400).json({ error: 'Email and tool are required' });
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    const user = await User.findOne({ email });
+    if (user) {
+      user.analytics.push({ tool, action, duration, ip });
+      if (user.analytics.length > 500) user.analytics = user.analytics.slice(-500);
+      await user.save();
+    }
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Admin endpoints (require auth) ---
+app.get('/api/users', requireAdmin, async (req, res) => {
+  try {
+    if (!isConnected) return res.status(503).json({ error: 'Database unavailable' });
+    const users = await User.find({}).select('-analytics').sort({ signupDate: -1 });
+    const totalUsers = users.length;
+    const today = new Date(); today.setHours(0,0,0,0);
+    const todaySignups = users.filter(u => new Date(u.signupDate) >= today).length;
+    const totalLogins = users.reduce((sum, u) => sum + u.loginCount, 0);
+    res.json({ success: true, users, stats: { totalUsers, todaySignups, totalLogins } });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/users/:email', requireAdmin, async (req, res) => {
+  try {
+    if (!isConnected) return res.status(503).json({ error: 'Database unavailable' });
+    await User.deleteOne({ email: req.params.email });
+    res.json({ success: true, message: 'User deleted' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/analytics/:email', requireAdmin, async (req, res) => {
+  try {
+    if (!isConnected) return res.status(503).json({ error: 'Database unavailable' });
+    const user = await User.findOne({ email: req.params.email });
+    if (!user) return res.status(400).json({ error: 'User not found' });
+    const toolCounts = {};
+    user.analytics.forEach(a => { toolCounts[a.tool] = (toolCounts[a.tool] || 0) + 1; });
+    res.json({ success: true, analytics: user.analytics, toolCounts });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- SEO helper functions ---
 async function trackRank(keyword, domain, maxPages) {
   const results = [];
   for (let page = 1; page <= maxPages; page++) {
@@ -210,57 +453,6 @@ function generateSitemap({ urls, changefreq = 'weekly', priority = 0.8 }) {
 
 function esc(s) { return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
 function escXml(s) { return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; }
-
-const otpStore = {};
-
-function generateOTP() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
-}
-
-app.post('/api/otp/generate', async (req, res) => {
-  const { email } = req.body;
-  if (!email) return res.status(400).json({ error: 'Email is required' });
-  const otp = generateOTP();
-  otpStore[email] = { otp, expires: Date.now() + 5 * 60 * 1000, attempts: 0 };
-  try {
-    await transporter.sendMail({
-      from: '"SEO Tools" <' + (process.env.GMAIL_USER || 'jy306648@gmail.com') + '>',
-      to: email,
-      subject: 'Your OTP Verification Code - SEO Tools',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px;">
-          <div style="text-align: center; margin-bottom: 24px;">
-            <h2 style="color: #1a73e8;">SEO Tools</h2>
-          </div>
-          <div style="background: #f8f9fa; border-radius: 16px; padding: 32px; text-align: center;">
-            <h3 style="color: #202124; margin-bottom: 8px;">Verify Your Email</h3>
-            <p style="color: #5f6368; margin-bottom: 24px;">Use the following code to complete your sign in:</p>
-            <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #1a73e8; background: white; padding: 16px 32px; border-radius: 12px; display: inline-block;">${otp}</div>
-            <p style="color: #5f6368; margin-top: 24px; font-size: 13px;">This code expires in 5 minutes.</p>
-          </div>
-          <p style="color: #9aa0a6; font-size: 12px; text-align: center; margin-top: 24px;">If you didn't request this, you can safely ignore this email.</p>
-        </div>
-      `
-    });
-    res.json({ success: true, message: 'OTP sent to your email' });
-  } catch (err) {
-    console.error('[OTP] Email send failed:', err.message);
-    res.status(500).json({ error: 'Failed to send OTP email. Please try again.' });
-  }
-});
-
-app.post('/api/otp/verify', (req, res) => {
-  const { email, otp } = req.body;
-  if (!email || !otp) return res.status(400).json({ error: 'Email and OTP are required' });
-  const record = otpStore[email];
-  if (!record) return res.status(400).json({ error: 'No OTP found. Please request a new one.' });
-  if (Date.now() > record.expires) { delete otpStore[email]; return res.status(400).json({ error: 'OTP expired. Please request a new one.' }); }
-  if (record.attempts >= 5) { delete otpStore[email]; return res.status(400).json({ error: 'Too many attempts. Please request a new OTP.' }); }
-  record.attempts++;
-  if (record.otp !== otp) return res.status(400).json({ error: 'Invalid OTP. Please try again.' });
-  delete otpStore[email];
-  res.json({ success: true, message: 'OTP verified successfully' });
-});
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`SEO Tools API running on port ${PORT}`);

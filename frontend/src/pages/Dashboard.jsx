@@ -44,7 +44,6 @@ const tools = [
 ];
 
 const features = [
-  { icon: '🔒', title: 'No Signup', desc: 'Start immediately, no account needed.' },
   { icon: '⚡', title: 'Instant Results', desc: 'Real-time analysis and reports.' },
   { icon: '📊', title: 'Detailed Reports', desc: 'Actionable insights you can use.' },
   { icon: '🌐', title: 'Client-Side', desc: 'Your data never leaves your browser.' },
@@ -69,7 +68,7 @@ const Dashboard = () => (
             The Complete SEO<br />Toolkit You Need
           </h1>
           <p className="text-lg md:text-xl text-blue-100 max-w-2xl mb-8 leading-relaxed">
-            Analyze, audit, track, and optimize your website with 38 powerful tools. No signup, no limits.
+            Analyze, audit, track, and optimize your website with 38 powerful tools. Sign up to get started.
           </p>
           <div className="flex flex-wrap gap-4 mb-12">
             <Link to="/keyword-research" className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-blue-700 font-semibold rounded-full hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl no-underline">
@@ -81,7 +80,7 @@ const Dashboard = () => (
             </a>
           </div>
           <div className="flex flex-wrap gap-8">
-            {[{ n: '38', l: 'Tools' }, { n: '100%', l: 'Free' }, { n: '0', l: 'Signups' }, { n: '∞', l: 'Uses' }].map(s => (
+            {[{ n: '38', l: 'Tools' }, { n: '100%', l: 'Free' }, { n: '24/7', l: 'Access' }, { n: '∞', l: 'Uses' }].map(s => (
               <div key={s.l} className="text-center">
                 <div className="text-2xl md:text-3xl font-bold">{s.n}</div>
                 <div className="text-sm text-blue-200">{s.l}</div>
